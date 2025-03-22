@@ -12,7 +12,7 @@ import  glob
 import  numpy as np
 import  re
 import  time
-import  pudb
+#import  pudb
 from    scipy               import  ndimage
 # System dependency imports
 import  nibabel              as      nib
@@ -23,6 +23,10 @@ import  matplotlib.cm        as      cm
 import  pfmisc
 from    pfmisc._colors      import  Colors
 from    pfmisc.message      import  Message
+
+
+#: dicom filenames are like *.dcm, *IMA, MR.*. This should be an option?
+DICOMPATTS = [r'(^|/)MR\.', r'\.dcm$', r'\.IMA$']
 
 
 def report(     callingClass,
@@ -489,7 +493,10 @@ class med2image_dcm(med2image):
     def __init__(self, **kwargs):
         med2image.__init__(self, **kwargs)
 
-        self.l_dcmFileNames = sorted(glob.glob('%s/*.dcm' % self.str_inputDir))
+        dcmfiles = [dcmfile
+                    for patt in DICOMPATTS
+                    for dcmfile in glob.glob(os.path.join(self.str_inputFile,patt))]
+        self.l_dcmFileNames = sorted(dcmfiles)
         self.slices         = len(self.l_dcmFileNames)
         if self._sliceToConvert != -1 or self.convertOnlySingleDICOM:
             if self._b_convertMiddleSlice:
@@ -792,9 +799,9 @@ class object_factoryCreate:
 
         b_niftiExt = (str_inputFileExtension == '.nii' or
                     str_inputFileExtension == '.gz')
-        b_dicomExt = (str_inputFileExtension == '.dcm' or
-                    str_inputFileExtension == '.IMA' or
-                    re.search(r"(^|/)MR\.",args.inputFile))
+        b_dicomExt = not b_niftiExt and (any([re.search(p, os.path.basename(args.inputFile))
+                           for p in DICOMPATTS]) or
+                      args.inputDir != '')
 
         self.C_convert  = None
         if b_niftiExt:
