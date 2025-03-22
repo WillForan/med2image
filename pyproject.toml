@@ -1,0 +1,20 @@
+[project]
+name = "med2image"
+dynamic = ["version"]
+description = "Utility to convert medical images to jpg and png"
+readme = "README.rst"
+requires-python = ">=3.12"
+dependencies = [
+    "matplotlib>=3.10.1",
+    "nibabel>=5.3.2",
+    "numpy>=2.2.4",
+    "pfmisc>=2.2.14",
+    "pillow>=11.1.0",
+    "pydicom>=3.0.1",
+    "scipy>=1.15.2",
+]
+
+[dependency-groups]
+dev = [
+    "pytest>=8.3.5",
+]

@@ -14,14 +14,14 @@ import  sys
 sys.path.insert(1, os.path.join(os.path.dirname(__file__), '..'))
 import  argparse
 
-from    med2image           import med2image
+from    med2image           import med2image, __version__
 from    argparse            import RawTextHelpFormatter
 from    argparse            import ArgumentParser
 from    pfmisc._colors      import Colors
 import  pudb
 
 
-str_version = "2.6.6"
+str_version = __version__
 str_desc    = Colors.CYAN + r"""
 
                         _  _____  _

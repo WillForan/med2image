@@ -5,6 +5,7 @@ if 10 * sys.version_info[0]  + sys.version_info[1] < 35:
     sys.exit("Sorry, only Python 3.5+ is supported.")
 
 from setuptools import setup
+from med2image import __version__
 
 def readme():
     with open('README.rst') as f:
@@ -12,7 +13,7 @@ def readme():
 
 setup(
       name             =   'med2image',
-      version          =   '2.7.20250322.1',
+      version          =   __version__,
       description      =   '(Python) utility to convert medical images to jpg and png',
       long_description =   readme(),
       author           =   'FNNDSC',
