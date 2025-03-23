@@ -356,6 +356,7 @@ if args.b_version:
 outstem_dir = os.path.dirname(args.outputFileStem)
 if args.outputDir == '.' and outstem_dir != '' and not re.search('%%', outstem_dir):
     args.outputDir = outstem_dir
+    args.outputFileStem = os.path.basename(args.outputFileStem)
 
 if args.man or args.synopsis:
     print(str_desc)
