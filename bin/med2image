@@ -10,6 +10,7 @@
 
 # System imports
 import  os
+import  re
 import  sys
 sys.path.insert(1, os.path.join(os.path.dirname(__file__), '..'))
 import  argparse
@@ -349,6 +350,12 @@ args = parser.parse_args()
 if args.b_version:
     print("Version: %s" % str_version)
     sys.exit(1)
+
+# path can be in output stem name, Don't require explicit -d/--outputDir ('.' default)
+# but avoid when stem dirname includes a template (like '%%ProtocolName/image.png')
+outstem_dir = os.path.dirname(args.outputFileStem)
+if args.outputDir == '.' and outstem_dir != '' and not re.search('%%', outstem_dir):
+    args.outputDir = outstem_dir
 
 if args.man or args.synopsis:
     print(str_desc)
