@@ -27,6 +27,7 @@ from    pfmisc.message      import  Message
 
 #: dicom filenames are like *.dcm, *IMA, MR.*. This should be an option?
 DICOMPATTS = [r'(^|/)MR\.', r'\.dcm$', r'\.IMA$']
+DICOMGLOBS = ['MR*', '*.dcm', '*.IMA']
 
 
 def report(     callingClass,
@@ -494,8 +495,8 @@ class med2image_dcm(med2image):
         med2image.__init__(self, **kwargs)
 
         dcmfiles = [dcmfile
-                    for patt in DICOMPATTS
-                    for dcmfile in glob.glob(os.path.join(self.str_inputFile,patt))]
+                    for patt in DICOMGLOBS
+                    for dcmfile in glob.glob(os.path.join(self.str_inputDir,patt))]
         self.l_dcmFileNames = sorted(dcmfiles)
         self.slices         = len(self.l_dcmFileNames)
         if self._sliceToConvert != -1 or self.convertOnlySingleDICOM:

@@ -3,6 +3,7 @@ from med2image import med2image
 from nibabel.testing import data_path
 import os
 
+
 def test_findnii():
     """
     Correctly setup for .nii.gz
@@ -11,6 +12,7 @@ def test_findnii():
     args.inputFile = data_path / "standard.nii.gz"
     nii_obj = med2image.object_factoryCreate(args)
     assert type(nii_obj.C_convert) == med2image.med2image_nii
+
 
 def test_finddcm(tmp_path):
     """
